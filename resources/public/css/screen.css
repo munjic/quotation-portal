@@ -1,0 +1,28 @@
+body {
+	color: #555;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+}
+
+h1 {
+	text-align: center;
+}
+
+div.row {
+	clear: both;
+	padding-top: 5px;
+}
+
+span.label {
+	margin-right: 10px;
+}
+
+div.row span.label {
+	float: left;
+	width: 10%;
+	text-align: right;
+}
+
+select {
+	width: 153px;
+}
