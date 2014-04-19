@@ -5,13 +5,6 @@
   (:use [quotation-portal.routes.params :as params :refer :all]
         [quotation-portal.routes.util :as util]))
 
-(defn configure [interest-rate alpha beta gamma]
-  (params/reset params/interest-rate interest-rate)
-  (params/reset params/alpha alpha)
-  (params/reset params/beta beta)
-  (params/reset params/gamma gamma)
-  (config))
-
 (defn config []
   (layout/common 
     "QP - Configuration"
@@ -25,6 +18,13 @@
                (control "beta" (text-field "beta") (str "Current value: " (params/get-beta)))
                (control "gamma" (text-field "gamma") (str "Current value: " (params/get-gamma)))
                (hiccup.form/submit-button "Change values")))))
+
+(defn configure [interest-rate alpha beta gamma]
+  (params/reset params/interest-rate interest-rate)
+  (params/reset params/alpha alpha)
+  (params/reset params/beta beta)
+  (params/reset params/gamma gamma)
+  (config))
 
 (defroutes config-routes
   (GET "/config" [] (config))

@@ -7,9 +7,10 @@
 
 (defn menu []
   (make-menu
-    (link-to "/" "Home")
+    (link-to "/" "Policy submission")
     (link-to "/policy-management" "Policy Management")
-    (link-to "/config" "Configuration")))
+    (link-to "/config" "Configuration")
+    (link-to "/" "About")))
 
 (defn common [& [title content]]
   (html5

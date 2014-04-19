@@ -7,10 +7,10 @@
 
 (defn policymgmt []
   (layout/common 
-    "QP - Configuration"
+    "QP - Policy Management"
     (list 
       [:h2 "Policy Management"]
-      [:i "Below is the list of policies which can be approved, cancelled or deleted."]
+      [:i "Below is the list of policies submitted through the Application Form. The policies can be approved, cancelled or deleted."]
 
                )))
 
