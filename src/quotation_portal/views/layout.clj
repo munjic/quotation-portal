@@ -3,12 +3,12 @@
             [hiccup.element :refer [link-to]]))
 
 (defn make-menu [& items]
-  [:div#usermenu (for [item items] [:div.menuitem item])])
+  [:div.menu [:ul (for [item items] [:li item])]])
 
 (defn menu []
   (make-menu
     (link-to "/" "Home")
-    (link-to "/" "Policies")
+    (link-to "/policy-management" "Policy Management")
     (link-to "/config" "Configuration")))
 
 (defn common [& [title content]]
@@ -20,5 +20,7 @@
      [:h1 "Quotation Portal"]
      [:hr]
      (menu)
-     content]))
+     [:hr]
+     [:div.content 
+     content]]))
 

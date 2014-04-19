@@ -1,5 +1,6 @@
 (ns quotation-portal.calc.calc
-  (:use [dk.ative.docjure.spreadsheet])
+  (:use [dk.ative.docjure.spreadsheet]
+        [quotation-portal.routes.params :as params :refer :all]) 
   (:require [clojure.math.numeric-tower :as math]))
 
 
@@ -17,8 +18,6 @@
                              ;:A :x, 
                              (get-column-key gender) :q-x})) 1))
 
-(def i 0.05)
-
 (defn v-func [i]
  (/ 1 (+ 1 i)))
 
@@ -27,7 +26,7 @@
 (def Mx [])
 
 (defn get-qx [qx-vec-of-maps]
-  "Given the vector of qx value maps returns returns the vector of clean qx values"
+  "Given the vector of qx value maps returns the vector of clean qx values"
   (loop [qx-out [] qx-in qx-vec-of-maps]
     (if (empty? qx-in)
       qx-out
@@ -90,16 +89,16 @@
       (recur (conj Mx-out (sum Cx-in)) (rest Cx-in)))))
 
 ;;;;;;;;;;;FOR TESTING PURPOSES
-(def Mx (get-Mx (get-Cx (get-dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000)) (v-func 0.05))))
-(def Dx (get-Dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000) (v-func 0.05)))
+(def Mx (get-Mx (get-Cx (get-dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000)) (v-func (params/get-interest-rate)))))
+(def Dx (get-Dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000) (v-func (params/get-interest-rate))))
 (def Nx (get-Nx Dx))
 ;;;;;;;;;
 
-(defn calc-Mx [workbook sheet gender sum-insured i]
-  (get-Mx (get-Cx (get-dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000)) (v-func 0.05))))
-
-(defn calc-Dx [workbook sheet gender sum-insured i]
-  (get-Dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000) (v-func 0.05)))
+;(defn calc-Mx [workbook sheet gender sum-insured i]
+;  (get-Mx (get-Cx (get-dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000)) (v-func 0.05))))
+;
+;(defn calc-Dx [workbook sheet gender sum-insured i]
+;  (get-Dx (get-lx (get-px (get-qx (read-qx "q.xlsx" "Sheet1" "male"))) 100000) (v-func 0.05)))
 
 
 (defn nEx [x n]
@@ -136,17 +135,18 @@
   (/ (net-single-premium insurance x n sum-insured)
      (* (adj-annuity-factor x t j) j)))
 
-(defn gross-single-premium [insurance x n t sum-insured alpha beta gamma]
+(defn gross-single-premium [insurance x n t sum-insured]
   (* (/ 
        (+ 
          (/ (net-single-premium insurance x n sum-insured) sum-insured)
-         alpha
-         (* gamma (annuity-factor x t))) 
-       (- 1 beta))
+         (params/get-alpha)
+         (* (params/get-gamma) (annuity-factor x t))) 
+       (- 1 (params/get-beta)))
      sum-insured))
 
-(defn gross-premium [insurance x n t j sum-insured alpha beta gamma]
-  "Given the insurance, age x, contract duration n, premiump payment duration 5, premium payment freq j, sum-insured, alpha, beta and gamma returns gross-premium"
-  (/ (gross-single-premium insurance x n t sum-insured alpha beta gamma)
+(defn gross-premium [insurance x n t j sum-insured]
+  "Given the insurance, age x, contract duration n, premiump payment duration 5, premium payment freq j, sum-insured"
+  (/ (gross-single-premium insurance x n t sum-insured)
      (* (adj-annuity-factor x t j) j)))
+                      
 

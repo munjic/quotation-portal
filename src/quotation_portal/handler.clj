@@ -6,7 +6,8 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [quotation-portal.routes.home :refer [home-routes]]
-            [quotation-portal.routes.config :refer [config-routes]]))
+            [quotation-portal.routes.config :refer [config-routes]]
+            [quotation-portal.routes.policymgmt :refer [polmgmt-routes]]))
 
 (defn init []
   (println "quotation-portal is starting"))
@@ -19,7 +20,7 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes config-routes home-routes app-routes)
+  (-> (routes polmgmt-routes config-routes home-routes app-routes)
       (handler/site)
       (wrap-base-url)))
 
