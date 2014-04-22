@@ -2,7 +2,7 @@
 
 This is a mock-up quotation and policy management portal for life insurance products. The application enables premium calculation and state management of insurance policies. 
 
-The premium calculation is done based on the input given in the application form and the mortality tables located in the q.xlsx file. The premium calculation implements formulas of actuarial mathematics using clojure's rich collection manipulation functions. The actuarial formulas implemented in the application are given in the quotation-portal-actuarial.pdf file.
+The premium calculation is done based on the input given in the application form and the mortality tables located in the _q.xlsx_ file. The premium calculation implements formulas of actuarial mathematics using clojure's rich collection manipulation functions. The actuarial formulas implemented in the application are given in the _quotation-portal-actuarial.pdf_ file.
 
 In the application, insurance policies are persisted to a sqlite database.
 
@@ -24,33 +24,46 @@ The used version of clojure is 1.5.1.
 
 The application is built based on leiningen's compojure-app template.
 
-## Clojure libraries
+## Libraries used
 
 ### compojure 1.1.6
-A concise routing library for Ring
+A concise routing library for Ring - https://github.com/weavejester/compojure
+
 	[compojure "1.1.6"]
 
 ### hiccup 1.0.5
+
+A fast library for rendering HTML in Clojure - https://github.com/weavejester/hiccup
 
 	[hiccup "1.0.5"]
 
 ### ring-server 0.3.1
 
+Library for running Ring web servers - https://github.com/weavejester/ring-server
+
 	[ring-server "0.3.1"]
 
 ### math.numeric-tower 0.0.2
+
+https://github.com/clojure/math.numeric-tower/
 
 	[org.clojure/math.numeric-tower "0.0.2"]
 
 ### clj-time 0.6.0
 
+A date and time library for Clojure - https://github.com/clj-time/clj-time
+
 	[clj-time "0.6.0"]
 
 ### java.jdbc 0.2.3
 
+A low-level Clojure wrapper for JDBC-based access to databases -https://github.com/clojure/java.jdbc
+
 	[org.clojure/java.jdbc "0.2.3"]
 
 ### sqlite-jdbc 3.7.2
+
+A library for accessing and creating SQLite database files - https://bitbucket.org/xerial/sqlite-jdbc
 
 	[org.xerial/sqlite-jdbc "3.7.2"]
 
