@@ -14,9 +14,8 @@
   "reads from the mortality sheet cutting of the header row value"
   (subvec (->> (load-workbook workbook)
             (select-sheet sheet)
-            (select-columns {
-                             ;:A :x, 
-                             (get-column-key gender) :q-x})) 1))
+            (select-columns 
+              {(get-column-key gender) :q-x})) 1))
 
 (defn calc-v [i]
   "given the interest rate i calculates v"
@@ -46,7 +45,7 @@
       (reverse lx-out)
       (recur (conj (seq lx-out) (* (first lx-out) (first px-in))) (rest px-in)))))
   
-(defn calc-Dx [lx]
+(defn calc-dLCx [lx]
   "Given the vector of lx values returns the dx values"
   (loop [dx-out [] 
          lx-in lx]
@@ -98,19 +97,21 @@
 
 (defn calc-Mx2 [qx]
   "Calculates Mx value based on the given qx vector"
-  (calc-Mx 
-    (calc-Cx 
-      (calc-Dx 
-        (calc-lx 
-          (calc-px qx)
-          100000)) 
-      (calc-v (params/get-interest-rate)))))
+  (let [v (calc-v (params/get-interest-rate))]
+    (calc-Mx 
+      (calc-Cx 
+        (calc-dLCx 
+          (calc-lx 
+            (calc-px qx)
+            100000))
+        v))))
 
 (defn calc-Dx2 [qx]
   "Calculates Dx value based on the given qx vector"
   (calc-Dx 
     (calc-lx 
-      (calc-px qx) 100000) (calc-v (params/get-interest-rate))))
+      (calc-px qx) 100000) 
+    (calc-v (params/get-interest-rate))))
 
 (defn nEx [Dx x n]
   "Given the age of insured person x and the contract duration n returns nEx value"
@@ -124,7 +125,7 @@
   "Given the nEx value, nAx value, insurance type and sum insured calculates net single premium"
   (* sum-insured
      (case insurance
-       "saving" nEx 
+       "survival" nEx 
        "death" nAx
        "endownment" (+ nEx nAx) 0)))
 
@@ -169,8 +170,8 @@
       (gross-premium
         (gross-single-premium
           (net-single-premium
-            (nAx Mx Dx x n)
             (nEx Dx x n)
+            (nAx Mx Dx x n)
             insurance
             sum-insured)
           annuity-factor

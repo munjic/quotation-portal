@@ -7,7 +7,9 @@
                  [ring-server "0.3.1"]
                  [org.clojure/math.numeric-tower "0.0.2"]
                  [dk.ative/docjure "1.6.0"]
-                 [clj-time "0.6.0"]]
+                 [clj-time "0.6.0"]
+                 [org.clojure/java.jdbc "0.2.3"]
+                 [org.xerial/sqlite-jdbc "3.7.2"]]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler quotation-portal.handler/app
          :init quotation-portal.handler/init

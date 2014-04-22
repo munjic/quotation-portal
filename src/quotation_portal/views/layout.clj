@@ -7,10 +7,10 @@
 
 (defn menu []
   (make-menu
-    (link-to "/" "Policy submission")
+    (link-to "/" "Policy Submission")
     (link-to "/policy-management" "Policy Management")
     (link-to "/config" "Configuration")
-    (link-to "/" "About")))
+    (link-to "/about" "About")))
 
 (defn common [& [title content]]
   (html5
@@ -23,5 +23,6 @@
      (menu)
      [:hr]
      [:div.content 
-     content]]))
+     content]
+     [:div.footer [:hr]]]))
 

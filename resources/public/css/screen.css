@@ -13,6 +13,12 @@ div.content {
 	margin-left: 10%;
 }
 
+div.footer {
+	margin-top: 7%;
+	margin-bottom: 3%;
+	clear: both;
+}
+
 h1 {
 	text-align: center;
 }
@@ -31,8 +37,6 @@ span.help-text {
 	font-style: italic;
 }
 
-
-
 div.row span.label {
 	float: left;
 	width: 10%;
@@ -47,7 +51,7 @@ div.button {
 	margin-right: 10px;
 }
 
-div.reset-btn{
+div.reset-btn {
 	margin-top: 10px;
 	width: 10%;
 	float: left;
@@ -86,5 +90,21 @@ select {
 .menu a:hover {
 	font-weight: bold;
 	color: gray;
-	text-decoration: underline;	
+	text-decoration: underline;
+}
+
+table.policies th {
+	border-bottom-style: solid;
+	padding-left: 1em;
+	text-align: right;
+}
+
+table.policies td {
+	border-bottom-style: inset;
+	border-bottom-width: thin;
+	padding-right: 1em;
+}
+
+table.policies input {
+	margin: 0px;
 }
